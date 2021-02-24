@@ -1,38 +1,38 @@
-import {makeAutoObservable} from "mobx";
-import {Store} from "./root_store";
-import {User} from "../types/server_type";
-import {UserRepository} from "../repositories/user_repository";
+import { makeAutoObservable } from "mobx";
+import { Store } from "./root_store";
+import { User } from "../types/server_type";
+import { UserRepository } from "../repositories/user_repository";
 
 interface InitializeData {
-    users: Array<User>;
+  users: Array<User>;
 }
 
 export class UserStore implements Store<InitializeData> {
-    public static readonly INITIALIZE_DATA: InitializeData = {users: []};
-    private users: Array<User> = [];
+  public static readonly INITIALIZE_DATA: InitializeData = { users: [] };
 
-    constructor() {
-        makeAutoObservable(this);
-    }
+  private users: Array<User> = [];
 
-    public hydrate(initializeData: InitializeData = UserStore.INITIALIZE_DATA) {
-        this.users = initializeData.users;
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    public async fetch(): Promise<void> {
-        const {data, status, statusText} = await UserRepository.getUsers();
-        if (status === 200) {
-            this.users = data;
-            return Promise.resolve();
-        } else {
-            return Promise.reject({
-                status,
-                statusText,
-            });
-        }
-    }
+  public hydrate(initializeData: InitializeData = UserStore.INITIALIZE_DATA): void {
+    this.users = initializeData.users;
+  }
 
-    public getUsers(): Array<User> {
-        return this.users;
+  public async fetch(): Promise<void> {
+    const { data, status, statusText } = await UserRepository.getUsers();
+    if (status === 200) {
+      this.users = data;
+      return Promise.resolve();
     }
+    return Promise.reject({
+      status,
+      statusText
+    });
+  }
+
+  public getUsers(): Array<User> {
+    return this.users;
+  }
 }

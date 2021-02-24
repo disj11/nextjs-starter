@@ -1,1 +1,1 @@
-export const NAME = "Next.js + React + Mobx";
+export const NAME = 'Next.js + React + Mobx';
