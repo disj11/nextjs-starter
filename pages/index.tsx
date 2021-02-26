@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { inject, observer } from "mobx-react";
-import { GetServerSideProps, NextPage } from "next";
+import { GetServerSideProps } from "next";
 import {
   Box,
   Button,
@@ -17,12 +17,14 @@ import {
 import { UserRepository } from "../src/repositories/user_repository";
 import { UserStore } from "../src/stores/user_store";
 import { ToggleThemeContext } from "../src/theme";
+import { NextPageWithLayout } from "../src/types/server_type";
+import Layout from "../src/components/Layout";
 
 interface Props {
   userStore: UserStore;
 }
 
-const Home: NextPage<Props> = inject("userStore")(
+const Home: NextPageWithLayout<Props> = inject("userStore")(
   observer((props) => {
     const { userStore } = props;
     const { toggleTheme } = React.useContext(ToggleThemeContext);
@@ -81,4 +83,5 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
+Home.Layout = Layout;
 export default Home;

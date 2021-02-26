@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from "axios";
+import { NextPage } from "next";
 
 export interface User {
   id: number;
@@ -14,4 +15,8 @@ export interface ServerResponse<T> {
   headers: any;
   config: AxiosRequestConfig;
   request: any;
+}
+
+export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<P, IP> & {
+  Layout?: any,
 }

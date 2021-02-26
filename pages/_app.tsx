@@ -2,8 +2,8 @@ import React from "react";
 import App, { AppContext, AppProps } from "next/app";
 import { Provider } from "mobx-react";
 import { ThemeProvider } from "../src/theme";
-import styles from "../styles/App.module.css";
 import { RootStore, RootStoreInitializeData } from "../src/stores/root_store";
+import { NextPageWithLayout } from "../src/types/server_type";
 
 interface Props {
   initialStoreState: RootStoreInitializeData;
@@ -11,13 +11,11 @@ interface Props {
 
 interface State {
   rootStore: RootStore;
-  style: React.CSSProperties;
 }
 
 class MyApp extends App {
   state: State = {
     rootStore: new RootStore(),
-    style: { visibility: "hidden" }
   };
 
   static async getInitialProps(appContext: AppContext): Promise<any> {
@@ -40,27 +38,19 @@ class MyApp extends App {
     if (jssStyles) {
       jssStyles.parentElement?.removeChild(jssStyles);
     }
-
-    this.setState({
-      ...this.state,
-      style: {}
-    });
   }
 
   render(): JSX.Element {
     const { Component, pageProps } = this.props;
+    const Layout = (Component as NextPageWithLayout).Layout || React.Fragment;
+
     return (
       <Provider {...this.state.rootStore}>
-        <div
-          className={styles["app-container"]}
-          style={this.state.style}
-        >
-          <ThemeProvider>
-            <div className={styles["content-container"]}>
-              <Component {...pageProps} />
-            </div>
-          </ThemeProvider>
-        </div>
+        <ThemeProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
       </Provider>
     );
   }
