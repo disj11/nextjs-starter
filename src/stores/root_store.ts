@@ -14,10 +14,6 @@ export interface RootStoreInitializeData {
 }
 
 export class RootStore implements Store<RootStoreInitializeData> {
-  public static readonly INITIALIZE_DATA: RootStoreInitializeData = {
-    ...UserStore.INITIALIZE_DATA
-  };
-
   public userStore: UserStore;
 
   constructor() {

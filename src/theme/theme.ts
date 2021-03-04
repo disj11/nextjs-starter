@@ -146,4 +146,4 @@ const options = (dark: boolean): ThemeOptions => {
 export const darkTheme = createMuiTheme(options(true));
 export const lightTheme = createMuiTheme(options(false));
 
-export default darkTheme;
+export default lightTheme;

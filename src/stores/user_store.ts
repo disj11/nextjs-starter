@@ -8,15 +8,13 @@ interface InitializeData {
 }
 
 export class UserStore implements Store<InitializeData> {
-  public static readonly INITIALIZE_DATA: InitializeData = { users: [] };
-
   private users: Array<User> = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  public hydrate(initializeData: InitializeData = UserStore.INITIALIZE_DATA): void {
+  public hydrate(initializeData: InitializeData): void {
     this.users = initializeData.users;
   }
 

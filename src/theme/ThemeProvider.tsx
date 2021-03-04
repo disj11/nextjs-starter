@@ -23,8 +23,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children
 }: ThemeProviderProps) => {
   const [selectedTheme, setSelectedTheme] = useState<SelectedTheme>({
-    appliedTheme: darkTheme,
-    themeName: "darkTheme"
+    appliedTheme: lightTheme,
+    themeName: "lightTheme"
   });
 
   useEffect(() => {
